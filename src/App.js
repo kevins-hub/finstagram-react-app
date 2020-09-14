@@ -6,6 +6,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import { Button, Input } from '@material-ui/core';
 import ImageUpload from './ImageUpload';
+import PfUpload from './PfUpload';
 
 function getModalStyle() {
   const top = 50;
@@ -41,6 +42,8 @@ function App() {
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
   const [user, setUser] = useState(null);
+
+  const [pfPic, setPfPic] = useState('');
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((authUser) => {
@@ -88,7 +91,9 @@ function App() {
       auth.createUserWithEmailAndPassword(email, password)
       .then((authUser) => {
         return authUser.user.updateProfile({
-          displayName: username
+          displayName: username,
+          photoURL: "https://thumbor.forbes.com/thumbor/960x0/https%3A%2F%2Fblogs-images.forbes.com%2Fbriansolomon%2Ffiles%2F2016%2F04%2Fmark-zuckerberg.jpg"
+        
         })
       })
       .catch((error) => alert(error.message))
@@ -158,8 +163,13 @@ function App() {
                 value={password}
                 onChange = {(e) => setPassword(e.target.value)}
               />
-              <Button type="submit" onClick={signUp}>Sign Up</Button>
-    
+
+
+              
+              
+              <Button type="submit" onClick={signUp}>Sign Up</Button> {/* Pass in pf url to signup */}
+
+
             </form>
           </div>
         }
@@ -210,7 +220,16 @@ function App() {
           alt=""
         />
         {user ? (
-          <Button onClick={() => auth.signOut()}>Logout</Button>
+          <div className="app__logoutContainer">
+            {!user.photoURL ? (
+              <PfUpload user={user}/>
+            ): (
+                <img className="app__pfthumbnail" src={user.photoURL}/>
+            )}
+            <Button onClick={() => auth.signOut()}>Logout</Button>
+          </div>
+
+    
         ) : (
           <div className="app_loginContainer">
             <Button onClick={() => setOpenSignIn(true)}>Sign In</Button>
@@ -222,7 +241,7 @@ function App() {
       <div className = "app__posts">
         {
           posts.map(({id, post}) => (
-            <Post key={id} postId={id} username={post.username} user={user} caption={post.caption} imageUrl={post.imageUrl}/>
+            <Post key={id} postId={id} username={post.username} user={user} caption={post.caption} imageUrl={post.imageUrl} pfUrl={post.pfUrl}/>
           ))
         }
       </div>
@@ -241,7 +260,8 @@ function App() {
 
     {/* ? tells it to not freak out if not defined */}
     {user?.displayName ? (
-      <ImageUpload username={user.displayName}/>
+      <ImageUpload user={user}/>
+
     ): (
       <h3>Sorry you need to log in to upload.</h3>
     )}

@@ -1,15 +1,14 @@
 import React, { useState } from 'react'
 import { Button } from "@material-ui/core";
-import firebase from "firebase";
+import { firebase, auth } from "firebase";
 import { storage, db } from "./firebase";
-import './ImageUpload.css';
+import './PfUpload.css';
 
 
-function ImageUpload({user}) {
+function PfUpload({user}) {
 
     const [image, setImage] = useState(null);
     const [progress, setProgress] = useState(0);
-    const [caption, setCaption] = useState('');
 
     const handleChange = (e) => {
         if (e.target.files[0]) {
@@ -35,32 +34,41 @@ function ImageUpload({user}) {
             },
             () => {
                 // complete function... go and get a download link
+
+
+
                 storage
                     .ref("images")
                     .child(image.name)
                     .getDownloadURL()
                     .then(url => {
+                        
+                        user.updateProfile({
+                            photoURL: url
+                        })
+
+
+
+                        /*
                         // post image inside db
                         db.collection("posts").add({
                             timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-                            caption: caption,
                             imageUrl: url,
-                            username: user.displayName,
-                            pfUrl: user.photoURL
+                            username: username
 
                         });
+                        */
                     
-                        setProgress(0);
-                        setCaption("");
-                        setImage(null);
-                    });
+           
+                    })
+                    .catch((error) => alert(error.message))
             }
 
         );
     };
     
     return (
-        <div className="imageupload">
+        <div className="pfupload">
 
             {/* I want to have....*/}
 
@@ -69,9 +77,8 @@ function ImageUpload({user}) {
             {/*File picker */}
 
             {/*Post button*/}
-
-            <progress value={progress} max="100" className="imageupload__progress" />
-            <input type="text" placeholder= 'Enter a caption...' onChange={event => setCaption(event.target.value)} value={caption} />
+            <p>Upload a Profile Picture!</p>
+            <progress value={progress} max="100" className="pfupload__progress" />
             <input type="file" onChange={handleChange} />
             <Button onClick={handleUpload}>
                 Upload
@@ -81,4 +88,4 @@ function ImageUpload({user}) {
     )
 }
 
-export default ImageUpload
+export default PfUpload

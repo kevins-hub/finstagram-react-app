@@ -4,7 +4,7 @@ import Avatar from "@material-ui/core/Avatar";
 import { db } from './firebase';
 import firebase from 'firebase';
 
-function Post({postId, username, user, caption, imageUrl}) {
+function Post({postId, username, user, caption, imageUrl, pfUrl}) {
 
     const [comments, setComments] = useState([]);
     const [comment, setComment] = useState([]);
@@ -44,8 +44,9 @@ function Post({postId, username, user, caption, imageUrl}) {
             <div className="post__header">
                 <Avatar
                     className="post__avatar"
-                    alt="kevohunch0"
-                    src="https://scontent-lax3-2.cdninstagram.com/v/t51.2885-19/s150x150/117558415_234345587773076_8698463286147491038_n.jpg?_nc_ht=scontent-lax3-2.cdninstagram.com&_nc_ohc=Gtw__mli7QIAX9ZUQzA&oh=e541dadd1ea1e645b723babeeefa7b5e&oe=5F795D1F"
+                    alt="pf-pic"
+                    //src={user?.photoURL}
+                    src={pfUrl}
                     //src="https://scontent-lax3-1.xx.fbcdn.net/v/t1.0-1/cp0/c0.0.60.60a/p60x60/10361500_10152628242842050_7122082405354141012_n.jpg?_nc_cat=109&_nc_sid=7206a8&_nc_ohc=5xUXOj2s3UIAX-zOISY&_nc_ht=scontent-lax3-1.xx&oh=107e4c6b07a9cba71e5aa0b57fe328e1&oe=5F769716"
                 />
                 <h3>{username}</h3>

@@ -36,3 +36,13 @@
   margin-right: auto;
   justify-content: center;
 }
+
+.app__logoutContainer{
+  display: flex;
+}
+
+.app__pfthumbnail{
+  max-height: 40px;
+  padding-right: 5px;
+  padding-left: 5px;
+}
