@@ -91,8 +91,8 @@ function App() {
       auth.createUserWithEmailAndPassword(email, password)
       .then((authUser) => {
         return authUser.user.updateProfile({
-          displayName: username,
-          photoURL: "https://thumbor.forbes.com/thumbor/960x0/https%3A%2F%2Fblogs-images.forbes.com%2Fbriansolomon%2Ffiles%2F2016%2F04%2Fmark-zuckerberg.jpg"
+          displayName: username
+          
         
         })
       })
@@ -250,13 +250,6 @@ function App() {
 
 {/* HEADER */}
 
-
-{/*
-<Post username="bluesklius" caption="wow it works" imageUrl="https://static.politico.com/dims4/default/f7234be/2147483647/resize/971x/quality/90/?url=https%3A%2F%2Fstatic.politico.com%2F5e%2F36%2F20d9fdcd4d8ab0e0b2add5e77371%2Fap20178460172749-1.jpg"/>
-<Post username="kevohunch0" caption="let's give him another shot." imageUrl="https://d3ebobe8l15pwo.cloudfront.net/wp-content/uploads/2020/05/o50620_Trump-wearing-MAGA-hat_e.jpg"/>
-<Post username="timosheelin" caption="wap is what I got" imageUrl="https://upload.wikimedia.org/wikipedia/en/f/f4/Cardi_B_-_WAP_%28feat._Megan_Thee_Stallion%29.png"/>
-<Post username="ollie.does.tricks" caption="mood" imageUrl="https://upload.wikimedia.org/wikipedia/en/7/7f/Kunta_Kinte_LeVar.jpg"/>
-*/}
 
     {/* ? tells it to not freak out if not defined */}
     {user?.displayName ? (
